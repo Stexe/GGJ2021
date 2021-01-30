@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
+
+public class PiecesEvent : UnityEvent<HashSet<Piece>> { }
 
 public class Board : MonoBehaviour
 {
@@ -12,9 +16,17 @@ public class Board : MonoBehaviour
     public BoardSquare squarePrefab;
     public Piece piecePrefab;
 
+    public PiecesEvent OnPiecesMatched;
+
     public BoardSquare[,] squares;
-    GridLayoutGroup grid;
+
+    private GridLayoutGroup grid;
     private Dictionary<PieceType, int> pieceTypeCounter = new Dictionary<PieceType, int>();
+
+    private void Awake()
+    {
+        OnPiecesMatched = new PiecesEvent();
+    }
 
     private void Start()
     {
@@ -151,7 +163,7 @@ public class Board : MonoBehaviour
         return adjacent;
     }
 
-    public void ExecuteMatches()
+    public bool FindAndNotifyMatches()
     {
         //find all of the matched pieces
         var matched = new HashSet<BoardSquare>();
@@ -181,6 +193,8 @@ public class Board : MonoBehaviour
             }
         }
 
+        OnPiecesMatched.Invoke(new HashSet<Piece>(matched.Select(m => m.Piece)));
+
         //delete all of the matched pieces
         foreach (var square in matched)
         {
@@ -190,16 +204,17 @@ public class Board : MonoBehaviour
         }
 
         //pull down all non-pieces
-        for (int y = Rows - 1; y >= 0; y--)
+        for (int x = 0; x < Columns; x++)
         {
-            for (int x = 0; x < Columns; x++)
+            for (int y = Rows - 1; y >= 0; y--)
             {
                 if (squares[x, y].Piece == null)
                 {
                     BoardSquare aboveSquareWithPiece = null;
                     // find a piece above to pull down
-                    for (int j = y; aboveSquareWithPiece == null && j >= 0; j--)
+                    for (int j = y - 1; aboveSquareWithPiece == null && j >= 0; j--)
                     {
+                        Debug.Log("Looking at " + coordStr(x, j));
                         if (squares[x, j].Piece != null)
                         {
                             Debug.Log("Moving " + squares[x, j].Piece.name + coordStr(x, j) + " -> " + coordStr(x, y));
@@ -223,6 +238,8 @@ public class Board : MonoBehaviour
                 }
             }
         }
+
+        return matched.Count > 0;
     }
 
     public Piece RemovePieceFromSquare(BoardSquare square)

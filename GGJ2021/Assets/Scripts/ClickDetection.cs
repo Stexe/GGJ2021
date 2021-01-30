@@ -5,15 +5,15 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BoardSquareDownEvent : UnityEvent<BoardSquare> { }
+public class BoardSquareEvent : UnityEvent<BoardSquare> { }
 
 public class ClickDetection : MonoBehaviour
 {
-    public BoardSquareDownEvent onBoardSquareDown;
+    public BoardSquareEvent onBoardSquareDown;
 
     void Awake()
     {
-        onBoardSquareDown = new BoardSquareDownEvent();
+        onBoardSquareDown = new BoardSquareEvent();
     }
 
     private void Update()

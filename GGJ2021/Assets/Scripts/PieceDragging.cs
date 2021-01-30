@@ -34,8 +34,7 @@ public class PieceDragging : MonoBehaviour
             
             heldPiece = null;
 
-            //IT WORKS
-            board.ExecuteMatches();
+            while (board.FindAndNotifyMatches()) { }
         }
         previousMousePosition = currentMousePosition;
 
