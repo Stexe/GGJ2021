@@ -121,18 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &171008315 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5990764189384063100, guid: 16ff063761f535346a23d53035531286,
-    type: 3}
-  m_PrefabInstance: {fileID: 5990764189552957767}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1147bccb333a24fb830e848737d737, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &171008317 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5990764189384063098, guid: 16ff063761f535346a23d53035531286,
@@ -314,51 +302,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &1571844166
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1571844168}
-  - component: {fileID: 1571844167}
-  m_Layer: 0
-  m_Name: Board Interaction
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1571844167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1571844166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5ce4248868a3d04082850878d7b4fa4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  board: {fileID: 171008315}
-  clickDetection: {fileID: 1924922535}
---- !u!4 &1571844168
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1571844166}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.7551517, y: 1.6920099, z: -6.466242}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1924922530
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,34 +4,39 @@ using UnityEngine;
 
 public class PieceDragging : MonoBehaviour
 {
-    public Board board;
-    public ClickDetection clickDetection;
     private Piece heldPiece;
-    Vector2 previousMousePosition;
+    private BoardSquare currentHoldingSquare;
+    private Vector2 previousMousePosition;
 
     void Start()
     {
-        clickDetection.onBoardSquareDown.AddListener(OnSquareClicked);
+        FindObjectOfType<ClickDetection>().onBoardSquareDown.AddListener(OnSquareClicked);
     }
 
     private void Update()
     {
+        Vector2 currentMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (heldPiece != null)
         {
             heldPiece.transform.position = new Vector3(
-                heldPiece.transform.position.x + Input.mousePosition.x - previousMousePosition.x,
-                heldPiece.transform.position.y + Input.mousePosition.y - previousMousePosition.y,
-                heldPiece.transform.position.z);
+                heldPiece.transform.position.x + currentMouse.x - previousMousePosition.x,
+                heldPiece.transform.position.y + currentMouse.y - previousMousePosition.y,
+                // float above other pieces
+                -1);
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
+            //stop floating above other pieces
+            heldPiece.transform.position = new Vector3(heldPiece.transform.position.x, heldPiece.transform.position.y, 0);
+            
             heldPiece = null;
         }
-        previousMousePosition = Input.mousePosition;
+        previousMousePosition = currentMouse;
     }
 
     void OnSquareClicked(BoardSquare square)
     {
+        currentHoldingSquare = square;
         heldPiece = square.Piece;
     }
 }

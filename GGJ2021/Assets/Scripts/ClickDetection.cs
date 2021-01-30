@@ -10,32 +10,23 @@ public class BoardSquareDownEvent : UnityEvent<BoardSquare> { }
 public class ClickDetection : MonoBehaviour
 {
     public BoardSquareDownEvent onBoardSquareDown;
-    GraphicRaycaster raycaster;
 
     void Awake()
     {
-        this.raycaster = GetComponent<GraphicRaycaster>();
-
         onBoardSquareDown = new BoardSquareDownEvent();
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            PointerEventData pointerData = new PointerEventData(EventSystem.current);
-            List<RaycastResult> results = new List<RaycastResult>();
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-            pointerData.position = Input.mousePosition;
-            this.raycaster.Raycast(pointerData, results);
-
-            foreach (RaycastResult result in results)
+            var maybeSquare = hit.collider.GetComponent<BoardSquare>();
+            
+            if (maybeSquare != null)
             {
-                var square = result.gameObject.GetComponent<BoardSquare>();
-                if (square != null)
-                {
-                    onBoardSquareDown.Invoke(square);
-                }
+                onBoardSquareDown.Invoke(maybeSquare);
             }
         }
     }
