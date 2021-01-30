@@ -6,7 +6,7 @@ public class PieceDragging : MonoBehaviour
 {
     private Board board;
 
-    private Piece heldPiece;
+    public Piece heldPiece;
     private BoardSquare currentHoldingSquare;
     private Vector2 previousMousePosition;
 
