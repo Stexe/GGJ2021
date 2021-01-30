@@ -286,7 +286,7 @@ public class Board : MonoBehaviour
         return piece;
     }
 
-    private static string coordStr(int x, int y)
+    public static string coordStr(int x, int y)
     {
         return "(" + x + ", " + y + ")";
     }
