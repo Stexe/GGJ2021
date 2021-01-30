@@ -25,9 +25,11 @@ public class ResourceManagement : MonoBehaviour
         {
             typeToResource.Add(r.piece.Type, r);
         }
-        
-        FindObjectOfType<Board>().OnPiecesMatched.AddListener(IncreaseResourcesForMatchedPieces);
 
+        Board board = FindObjectOfType<Board>();
+        board.OnPiecesMatched.AddListener(IncreaseResourcesForMatchedPieces);
+
+        board.InitializeBoard();
     }
 
     private void IncreaseResourcesForMatchedPieces(HashSet<Piece> matched)

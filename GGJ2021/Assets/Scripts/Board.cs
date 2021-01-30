@@ -33,7 +33,6 @@ public class Board : MonoBehaviour
         resourceManagement = FindObjectOfType<ResourceManagement>();
         grid = GetComponent<GridLayoutGroup>();
         grid.constraintCount = Columns;
-        InitializeBoard();
     }
 
     public void InitializeBoard()
@@ -273,7 +272,7 @@ public class Board : MonoBehaviour
 
     private Piece GenerateNewPiece(BoardSquare onSquare, PieceType type)
     {
-        var piece = Instantiate(piecePrefab, onSquare.transform);
+        var piece = Instantiate(resourceManagement.typeToResource[type].piece, onSquare.transform);
 
         // give piece a name
         if (!pieceTypeCounter.ContainsKey(type))
