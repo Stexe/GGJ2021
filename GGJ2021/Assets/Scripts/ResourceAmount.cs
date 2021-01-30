@@ -6,6 +6,12 @@ using UnityEngine;
 public class ResourceAmount : MonoBehaviour
 {
     private int amount;
+
+    private void Start()
+    {
+        GetComponent<TextMeshProUGUI>().text = 0.ToString();
+    }
+
     public void IncreaseAmount(int byAmount)
     {
         amount += byAmount;
