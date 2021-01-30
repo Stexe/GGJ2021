@@ -27,7 +27,7 @@ public class PieceDragging : MonoBehaviour
                 // float above other pieces
                 -1);
         }
-        if (Input.GetKeyUp(KeyCode.Mouse0))
+        if (Input.GetKeyUp(KeyCode.Mouse0) && heldPiece != null)
         {
             //stop floating above other pieces
             heldPiece.transform.position = new Vector3(currentHoldingSquare.transform.position.x, currentHoldingSquare.transform.position.y, 0);
