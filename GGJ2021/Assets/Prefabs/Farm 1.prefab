@@ -53,6 +53,8 @@ MonoBehaviour:
   costs:
   - type: 1
     amount: 2
+  - type: 2
+    amount: 3
 --- !u!212 &5338243076913311304
 SpriteRenderer:
   m_ObjectHideFlags: 0
