@@ -1,52 +1,40 @@
 ﻿using EnergyBarToolkit;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+[Serializable]
+public class Resource
+{
+    public Piece piece;
+    public EnergyBar bar;
+}
 
 public class ResourceManagement : MonoBehaviour
-{
-    private class Resource
-    {
-        public EnergyBar bar;
-        public FilledRendererUGUI gui;
+{   
+    public Resource[] resources;
 
-        public Resource(EnergyBar bar, FilledRendererUGUI gui)
-        {
-            this.bar = bar;
-            this.gui = gui;
-        }
-    }
-    private Board board;
-    private Dictionary<PieceType, Resource> pieceTypeToResource;
+    public Dictionary<PieceType, Resource> typeToResource;
 
     void Start()
     {
-        board = FindObjectOfType<Board>();
-
-        pieceTypeToResource = new Dictionary<PieceType, Resource>();
-
-        var bars = FindObjectsOfType<EnergyBar>();
-        for (int i = 0; i < bars.Length; i++)
+        typeToResource = new Dictionary<PieceType, Resource>();
+        foreach (var r in resources)
         {
-            var bar = bars[i];
-            var type = (PieceType)i;
-            var resource = new Resource(bar, bar.GetComponent<FilledRendererUGUI>());
-            resource.gui.spriteBarColor = PieceMapping.typeToColor[type];
-
-            Debug.Log(resource.gui.spriteBarColor);
-
-            pieceTypeToResource.Add(type, resource);
+            typeToResource.Add(r.piece.Type, r);
         }
+        
+        FindObjectOfType<Board>().OnPiecesMatched.AddListener(IncreaseResourcesForMatchedPieces);
 
-        board.OnPiecesMatched.AddListener(IncreaseResourcesForMatchedPieces);
     }
 
     private void IncreaseResourcesForMatchedPieces(HashSet<Piece> matched)
     {
         foreach (Piece p in matched)
         {
-            Debug.Log("increasing for " + p.Type);
-            pieceTypeToResource[p.Type].bar.valueCurrent++;
+            typeToResource[p.Type].bar.valueCurrent++;
         }
     }
 }

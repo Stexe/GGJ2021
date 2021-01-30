@@ -22,6 +22,7 @@ public class Board : MonoBehaviour
 
     private GridLayoutGroup grid;
     private Dictionary<PieceType, int> pieceTypeCounter = new Dictionary<PieceType, int>();
+    private ResourceManagement resourceManagement;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class Board : MonoBehaviour
 
     private void Start()
     {
+        resourceManagement = FindObjectOfType<ResourceManagement>();
         grid = GetComponent<GridLayoutGroup>();
         grid.constraintCount = Columns;
         InitializeBoard();
@@ -262,7 +264,6 @@ public class Board : MonoBehaviour
 
     public void MovePieceBetweenSquares(BoardSquare from, BoardSquare to)
     {
-        //var piece = RemovePieceFromSquare(from);
         PlacePieceOnSquare(from.Piece, to);
     }
 
@@ -274,7 +275,6 @@ public class Board : MonoBehaviour
     private Piece GenerateNewPiece(BoardSquare onSquare, PieceType type)
     {
         var piece = Instantiate(piecePrefab, onSquare.transform);
-        piece.Type = type;
 
         // give piece a name
         if (!pieceTypeCounter.ContainsKey(type))
