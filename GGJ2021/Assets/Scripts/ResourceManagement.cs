@@ -10,10 +10,11 @@ public class Resource
 {
     public Piece piece;
     public EnergyBar bar;
+    public int count;
 }
 
 public class ResourceManagement : MonoBehaviour
-{   
+{
     public Resource[] resources;
 
     public Dictionary<PieceType, Resource> typeToResource;
@@ -36,7 +37,13 @@ public class ResourceManagement : MonoBehaviour
     {
         foreach (Piece p in matched)
         {
-            typeToResource[p.Type].bar.valueCurrent++;
+            Resource resource = typeToResource[p.Type];
+            resource.bar.valueCurrent++;
+            while (resource.bar.valueMax <= resource.bar.valueCurrent)
+            {
+                resource.bar.valueCurrent -= resource.bar.valueMax;
+                resource.bar.GetComponentInChildren<ResourceAmount>().IncreaseAmount(1);
+            }
         }
     }
 }
