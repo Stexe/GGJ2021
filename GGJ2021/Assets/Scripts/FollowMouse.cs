@@ -21,7 +21,7 @@ public class FollowMouse : MonoBehaviour
     {
         if (pieceDragging.heldPiece == null)
         {
-            filledRenderer.enabled = false;
+            // Make invisible here?
         }
 
         Vector2 pos;
