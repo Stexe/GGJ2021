@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -123.75, y: 50.25}
-  m_SizeDelta: {x: -287.5, y: -200.5}
+  m_AnchoredPosition: {x: -350, y: 62.5}
+  m_SizeDelta: {x: -750, y: -175}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5990764189384063099
 MonoBehaviour:
@@ -56,7 +56,7 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
-  m_StartAxis: 0
+  m_StartAxis: 1
   m_CellSize: {x: 77, y: 77}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
@@ -73,7 +73,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec1147bccb333a24fb830e848737d737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TypeCount: 4
   MinimumMatchCount: 3
   Rows: 8
   Columns: 8
