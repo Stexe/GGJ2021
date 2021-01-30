@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,8 +12,9 @@ public class Board : MonoBehaviour
     public BoardSquare squarePrefab;
     public Piece piecePrefab;
 
-    public BoardSquare[,] boardSquares;
+    public BoardSquare[,] squares;
     GridLayoutGroup grid;
+    private Dictionary<PieceType, int> pieceTypeCounter = new Dictionary<PieceType, int>();
 
     private void Start()
     {
@@ -25,40 +25,38 @@ public class Board : MonoBehaviour
 
     public void InitializeBoard()
     {
-        boardSquares = new BoardSquare[Rows, Columns];
+        squares = new BoardSquare[Columns, Rows];
         for (int x = 0; x < Columns; x++)
         {
             for (int y = 0; y < Rows; y++)
             {
                 // instantiate board square
                 var square = Instantiate(squarePrefab, this.transform);
-                boardSquares[x, y] = square;
+                squares[x, y] = square;
                 square.name = "Square (" + x + ", " + y + ")";
 
-                // randomize piece type without causes matches (brute force)
+                // randomize piece type without causing matches (brute force)
                 PieceType type;
                 do
                 {
                     type = (PieceType)Random.Range(0, TypeCount);
-                } while (GetVerticallyConnectedOfType(this, type, x, y).Count >= MinimumMatchCount - 1
-                || GetHorizontallyConnectedOfType(this, type, x, y).Count >= MinimumMatchCount - 1);
+                } while (GetVerticallyConnectedOfType(type, x, y).Count + 1 >= MinimumMatchCount
+                || GetHorizontallyConnectedOfType(type, x, y).Count + 1 >= MinimumMatchCount);
 
-                // create piece type
-                var piece = Instantiate(piecePrefab, square.transform);
-                piece.Type = type;
-                square.Piece = piece;
+                // create new piece
+                GenerateNewPiece(square, type);
             }
         }
     }
 
-    public static List<BoardSquare> GetVerticallyConnectedOfType(Board board, PieceType type, int x, int y)
+    public List<BoardSquare> GetVerticallyConnectedOfType(PieceType type, int x, int y)
     {
         var connected = new List<BoardSquare>();
 
         // check above
         for (int i = y - 1; i >= 0; i--)
         {
-            var square = board.boardSquares[x, i];
+            var square = squares[x, i];
             if (square.Piece == null || square.Piece.Type != type)
             {
                 break;
@@ -67,9 +65,9 @@ public class Board : MonoBehaviour
         }
 
         // check below
-        for (int i = y + 1; i < board.Rows; i++)
+        for (int i = y + 1; i < Rows; i++)
         {
-            var square = board.boardSquares[x, i];
+            var square = squares[x, i];
             if (square == null || square.Piece == null || square.Piece.Type != type)
             {
                 break;
@@ -80,14 +78,14 @@ public class Board : MonoBehaviour
         return connected;
     }
 
-    public static List<BoardSquare> GetHorizontallyConnectedOfType(Board board, PieceType type, int x, int y)
+    public List<BoardSquare> GetHorizontallyConnectedOfType(PieceType type, int x, int y)
     {
         var connected = new List<BoardSquare>();
 
         // check left
         for (int i = x - 1; i >= 0; i--)
         {
-            var square = board.boardSquares[i, y];
+            var square = squares[i, y];
             if (square.Piece == null || square.Piece.Type != type)
             {
                 break;
@@ -96,9 +94,9 @@ public class Board : MonoBehaviour
         }
 
         // check right
-        for (int i = x + 1; i < board.Columns; i++)
+        for (int i = x + 1; i < Columns; i++)
         {
-            var square = board.boardSquares[i, y];
+            var square = squares[i, y];
             if (square == null || square.Piece == null || square.Piece.Type != type)
             {
                 break;
@@ -120,7 +118,7 @@ public class Board : MonoBehaviour
         {
             for (; y < Rows && go; y++)
             {
-                if (square.name == boardSquares[x, y].name)
+                if (square == squares[x, y])
                 {
                     go = false;
                     break;
@@ -135,21 +133,146 @@ public class Board : MonoBehaviour
 
         if (x > 0)
         {
-            adjacent.Add(boardSquares[x - 1, y]);
+            adjacent.Add(squares[x - 1, y]);
         }
         if (y > 0)
         {
-            adjacent.Add(boardSquares[x, y - 1]);
+            adjacent.Add(squares[x, y - 1]);
         }
         if (x < Columns - 1)
         {
-            adjacent.Add(boardSquares[x + 1, y]);
+            adjacent.Add(squares[x + 1, y]);
         }
         if (y < Rows - 1)
         {
-            adjacent.Add(boardSquares[x, y + 1]);
+            adjacent.Add(squares[x, y + 1]);
         }
 
         return adjacent;
+    }
+
+    public void ExecuteMatches()
+    {
+        //find all of the matched pieces
+        var matched = new HashSet<BoardSquare>();
+        for (int x = 0; x < Columns; x++)
+        {
+            for (int y = 0; y < Rows; y++)
+            {
+                var connected = GetHorizontallyConnectedOfType(squares[x, y].Piece.Type, x, y);
+                if (connected.Count + 1 >= MinimumMatchCount)
+                {
+                    matched.Add(squares[x, y]);
+                    foreach (var c in connected)
+                    {
+                        matched.Add(c);
+                    }
+
+                }
+                connected = GetVerticallyConnectedOfType(squares[x, y].Piece.Type, x, y);
+                if (connected.Count + 1 >= MinimumMatchCount)
+                {
+                    matched.Add(squares[x, y]);
+                    foreach (var c in connected)
+                    {
+                        matched.Add(c);
+                    }
+                }
+            }
+        }
+
+        //delete all of the matched pieces
+        foreach (var square in matched)
+        {
+            Debug.Log("Matched " + square.Piece.name + " on " + square.gameObject.name.Replace("Square", ""));
+            var piece = RemovePieceFromSquare(square);
+            Destroy(piece.gameObject);
+        }
+
+        //pull down all non-pieces
+        for (int y = Rows - 1; y >= 0; y--)
+        {
+            for (int x = 0; x < Columns; x++)
+            {
+                if (squares[x, y].Piece == null)
+                {
+                    BoardSquare aboveSquareWithPiece = null;
+                    // find a piece above to pull down
+                    for (int j = y; aboveSquareWithPiece == null && j >= 0; j--)
+                    {
+                        if (squares[x, j].Piece != null)
+                        {
+                            Debug.Log("Moving " + squares[x, j].Piece.name + coordStr(x, j) + " -> " + coordStr(x, y));
+                            MovePieceBetweenSquares(squares[x, j], squares[x, y]);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        //fill in empty spots
+        for (int x = 0; x < Columns; x++)
+        {
+            for (int y = Rows - 1; y >= 0; y--)
+            {
+                if (squares[x, y].Piece == null)
+                {
+                    var piece = GenerateNewPiece(squares[x, y]);
+                    Debug.Log("Placed new piece " + piece.name + " on " + coordStr(x, y));
+                }
+            }
+        }
+    }
+
+    public Piece RemovePieceFromSquare(BoardSquare square)
+    {
+        var piece = square.GetComponentInChildren<Piece>();
+        piece.transform.SetParent(null);
+        return piece;
+    }
+
+    public void PlacePieceOnSquare(Piece piece, BoardSquare square)
+    {
+        if (square.GetComponentInChildren<Piece>() != null)
+        {
+            throw new System.Exception("Square already has a Piece!");
+        }
+
+        piece.transform.SetParent(square.transform);
+        piece.transform.localPosition = new Vector3(0, 0, 0);
+    }
+
+    public void MovePieceBetweenSquares(BoardSquare from, BoardSquare to)
+    {
+        //var piece = RemovePieceFromSquare(from);
+        PlacePieceOnSquare(from.Piece, to);
+    }
+
+    private Piece GenerateNewPiece(BoardSquare onSquare)
+    {
+        return GenerateNewPiece(onSquare, (PieceType)Random.Range(0, TypeCount));
+    }
+
+    private Piece GenerateNewPiece(BoardSquare onSquare, PieceType type)
+    {
+        var piece = Instantiate(piecePrefab, onSquare.transform);
+        piece.Type = type;
+
+        // give piece a name
+        if (!pieceTypeCounter.ContainsKey(type))
+        {
+            pieceTypeCounter.Add(type, 1);
+        }
+        int count = pieceTypeCounter[type];
+        piece.gameObject.name = type + ", " + count;
+        pieceTypeCounter[type] = count + 1;
+
+        return piece;
+    }
+
+    private static string coordStr(int x, int y)
+    {
+        return "(" + x + ", " + y + ")";
     }
 }

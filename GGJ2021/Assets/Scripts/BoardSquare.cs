@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class BoardSquare : MonoBehaviour
 {
-    public Piece Piece;
+    public Piece Piece
+    {
+        get { return GetComponentInChildren<Piece>(); }
+    }
 }

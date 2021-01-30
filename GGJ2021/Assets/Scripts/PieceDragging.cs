@@ -33,18 +33,21 @@ public class PieceDragging : MonoBehaviour
             heldPiece.transform.position = new Vector3(currentHoldingSquare.transform.position.x, currentHoldingSquare.transform.position.y, 0);
             
             heldPiece = null;
+
+            //IT WORKS
+            board.ExecuteMatches();
         }
         previousMousePosition = currentMousePosition;
 
-        // swap pieces
+        // swap pieces while you're holding and moving the piece around
         var hoveredSquare = GetHoveredSquare();
-        if (heldPiece != null 
+        if (heldPiece != null
             && hoveredSquare != null
-            && hoveredSquare.name != currentHoldingSquare.name
+            && hoveredSquare != currentHoldingSquare
             //checks if it's a legal swap (to an adjacent square)
             && board.GetAdjacentSquares(currentHoldingSquare).Find(square => square.name == hoveredSquare.name) != null)
         {
-            SwapPieces(currentHoldingSquare, hoveredSquare);
+            SwapHeldPieceWithOtherPiece(currentHoldingSquare, hoveredSquare);
         }
     }
 
@@ -66,15 +69,21 @@ public class PieceDragging : MonoBehaviour
         return hit.collider.GetComponent<BoardSquare>();
     }
 
-    private void SwapPieces(BoardSquare squareWithHeldPiece, BoardSquare squareWithNotHeldPiece)
+    private void SwapHeldPieceWithOtherPiece(BoardSquare squareWithHeldPiece, BoardSquare squareWithNotHeldPiece)
     {
-        //move ownership of not-held-piece
-        var notHeldPiece = squareWithNotHeldPiece.Piece;
-        notHeldPiece.transform.position = squareWithHeldPiece.transform.position;
-        squareWithHeldPiece.Piece = notHeldPiece;
+        // remove not held piece from current square
+        var toSquareWithHeld = board.RemovePieceFromSquare(squareWithNotHeldPiece);
 
-        //move ownership of held piece
-        squareWithNotHeldPiece.Piece = heldPiece;
+        // move held piece to new square
+        var piece = squareWithHeldPiece.Piece;
+        var pos = piece.transform.position;
+        piece.transform.SetParent(squareWithNotHeldPiece.transform, false);
+        piece.transform.position = pos;
+
+        //add not held piece to new square
+        board.PlacePieceOnSquare(toSquareWithHeld, squareWithHeldPiece);
+
+        //update held square state
         currentHoldingSquare = squareWithNotHeldPiece;
     }
 }
