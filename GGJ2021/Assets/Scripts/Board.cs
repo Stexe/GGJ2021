@@ -8,7 +8,6 @@ public class PiecesEvent : UnityEvent<HashSet<Piece>> { }
 
 public class Board : MonoBehaviour
 {
-    public int TypeCount;
     public int MinimumMatchCount;
     public int Rows;
     public int Columns;
@@ -53,7 +52,7 @@ public class Board : MonoBehaviour
                 PieceType type;
                 do
                 {
-                    type = (PieceType)Random.Range(0, TypeCount);
+                    type = (PieceType)Random.Range(0, resourceManagement.resources.Length);
                 } while (GetVerticallyConnectedOfType(type, x, y).Count + 1 >= MinimumMatchCount
                 || GetHorizontallyConnectedOfType(type, x, y).Count + 1 >= MinimumMatchCount);
 
@@ -269,7 +268,7 @@ public class Board : MonoBehaviour
 
     private Piece GenerateNewPiece(BoardSquare onSquare)
     {
-        return GenerateNewPiece(onSquare, (PieceType)Random.Range(0, TypeCount));
+        return GenerateNewPiece(onSquare, (PieceType)Random.Range(0, resourceManagement.resources.Length));
     }
 
     private Piece GenerateNewPiece(BoardSquare onSquare, PieceType type)
