@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PieceDragging : MonoBehaviour
 {
+    private Board board;
+
     private Piece heldPiece;
     private BoardSquare currentHoldingSquare;
     private Vector2 previousMousePosition;
 
     void Start()
     {
+        board = FindObjectOfType<Board>();
         FindObjectOfType<ClickDetection>().onBoardSquareDown.AddListener(OnSquareClicked);
     }
 
@@ -35,9 +38,12 @@ public class PieceDragging : MonoBehaviour
 
         // swap pieces
         var hoveredSquare = GetHoveredSquare();
-        if (heldPiece != null && hoveredSquare != null && hoveredSquare.name != currentHoldingSquare.name)
+        if (heldPiece != null 
+            && hoveredSquare != null
+            && hoveredSquare.name != currentHoldingSquare.name
+            //checks if it's a legal swap (to an adjacent square)
+            && board.GetAdjacentSquares(currentHoldingSquare).Find(square => square.name == hoveredSquare.name) != null)
         {
-            Debug.Log("SWAPPING " + hoveredSquare.name + ", " + currentHoldingSquare.name);
             SwapPieces(currentHoldingSquare, hoveredSquare);
         }
     }

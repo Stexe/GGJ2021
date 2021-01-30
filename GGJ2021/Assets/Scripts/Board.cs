@@ -108,4 +108,48 @@ public class Board : MonoBehaviour
 
         return connected;
     }
+
+    public List<BoardSquare> GetAdjacentSquares(BoardSquare square)
+    {
+        List<BoardSquare> adjacent = new List<BoardSquare>();
+
+        int x = 0;
+        int y = 0;
+        bool go = true;
+        for (; x < Columns && go; x++)
+        {
+            for (; y < Rows && go; y++)
+            {
+                if (square.name == boardSquares[x, y].name)
+                {
+                    go = false;
+                    break;
+                }
+            }
+            if (!go)
+            {
+                break;
+            }
+            y = 0;
+        }
+
+        if (x > 0)
+        {
+            adjacent.Add(boardSquares[x - 1, y]);
+        }
+        if (y > 0)
+        {
+            adjacent.Add(boardSquares[x, y - 1]);
+        }
+        if (x < Columns - 1)
+        {
+            adjacent.Add(boardSquares[x + 1, y]);
+        }
+        if (y < Rows - 1)
+        {
+            adjacent.Add(boardSquares[x, y + 1]);
+        }
+
+        return adjacent;
+    }
 }
