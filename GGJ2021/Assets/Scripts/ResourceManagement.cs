@@ -12,6 +12,11 @@ public class Resources
     public int count;
 }
 
+public enum ExcavationType
+{
+    Normal, Medium, Hard
+}
+
 public class ResourceManagement : MonoBehaviour
 {
     public Dictionary<PieceType, Resource> typeToResource;
@@ -33,9 +38,9 @@ public class ResourceManagement : MonoBehaviour
 
     public void DeductCostAndModifyEfficiency(Building building)
     {
+        typeToResource[building.efficiencyType].bar.GetComponentInChildren<ResourceEfficiency>().DecreaseAmount(1);
         foreach (var cost in building.costs)
         {
-            typeToResource[cost.type].bar.GetComponentInChildren<ResourceEfficiency>().DecreaseAmount(1);
             typeToResource[cost.type].bar.GetComponentInChildren<ResourceAmount>().DecreaseAmount(cost.amount);
         }
     }
@@ -45,19 +50,19 @@ public class ResourceManagement : MonoBehaviour
         return !building.costs.Any(cost => typeToResource[cost.type].bar.GetComponentInChildren<ResourceAmount>().amount < cost.amount);
     }
 
-    public bool HasResourcesToExcavateNormal()
+    public bool HasResourcesToExcavate(ExcavationType type)
     {
-        return !costToExcavateNormal.Any(cost => typeToResource[cost.type].bar.valueCurrent < cost.amount);
-    }
+        switch (type)
+        {
+            case ExcavationType.Normal:
+                return !costToExcavateNormal.Any(cost => typeToResource[cost.type].bar.valueCurrent < cost.amount);
+            case ExcavationType.Medium:
+                return !costToExcavateMedium.Any(cost => typeToResource[cost.type].bar.valueCurrent < cost.amount);
+            case ExcavationType.Hard:
+                return !costToExcavateHard.Any(cost => typeToResource[cost.type].bar.valueCurrent < cost.amount);
+        }
 
-    public bool HasResourcesToExcavateMedium()
-    {
-        return !costToExcavateMedium.Any(cost => typeToResource[cost.type].bar.valueCurrent < cost.amount);
-    }
-
-    public bool HasResourcesToExcavateHard()
-    {
-        return !costToExcavateHard.Any(cost => typeToResource[cost.type].bar.valueCurrent < cost.amount);
+        throw new Exception("Cost undefined for " + type);
     }
 
     private void IncreaseResourcesForMatchedPieces(HashSet<Piece> matched)

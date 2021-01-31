@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
+    public GameObject buildingPanel;
+    public Color selectedColor = Color.red;
+
     private ResourceManagement resourceManagement;
     private Map map;
     private BuildingType? typeToBuild;
@@ -49,10 +53,16 @@ public class MapManager : MonoBehaviour
         return resourceManagement.HasResourcesToBuild(map.typeToBuilding[type]);
     }
 
-    private void OnBuildButtonClicked(BuildingType type)
+    public void OnBuildButtonClicked(BuildingType type)
     {
-        if (typeToBuild == type)
+        Debug.Log("selected " + type);
+        var button = buildingPanel.GetComponentsInChildren<BuildingButtonType>()
+                .Where(b => b.type == type)
+                .First();
+        if (typeToBuild.Value == type)
         {
+            Debug.Log("deselected " + type);
+            button.GetComponent<Image>().color = Color.white;
             typeToBuild = null;
         }
         else if (CanAfford(type))
@@ -60,42 +70,19 @@ public class MapManager : MonoBehaviour
             Debug.Log("Build Mode: " + type);
             typeToBuild = type;
             inExcavateMode = false;
+
+            button.GetComponent<Image>().color = selectedColor;
         }
     }
 
-    private void OnExcavateNormalButtonClicked()
+    private void OnExcavateButtonClicked(ExcavationType type)
     {
+        Debug.Log("selected " + type);
         if (inExcavateMode)
         {
             inExcavateMode = false;
         }
-        else if (resourceManagement.HasResourcesToExcavateNormal())
-        {
-            inExcavateMode = true;
-            typeToBuild = null;
-        }
-    }
-
-    private void OnExcavateMediumButtonClicked()
-    {
-        if (inExcavateMode)
-        {
-            inExcavateMode = false;
-        }
-        else if (resourceManagement.HasResourcesToExcavateMedium())
-        {
-            inExcavateMode = true;
-            typeToBuild = null;
-        }
-    }
-
-    private void OnExcavateHardButtonClicked()
-    {
-        if (inExcavateMode)
-        {
-            inExcavateMode = false;
-        }
-        else if (resourceManagement.HasResourcesToExcavateHard())
+        else if (resourceManagement.HasResourcesToExcavate(type))
         {
             inExcavateMode = true;
             typeToBuild = null;
@@ -149,16 +136,16 @@ public class MapManager : MonoBehaviour
 
     public void ExcavateNormalButtonClicked()
     {
-        OnExcavateNormalButtonClicked();
+        OnExcavateButtonClicked(ExcavationType.Normal);
     }
 
     public void ExcavateMediumButtonClicked()
     {
-        OnExcavateMediumButtonClicked();
+        OnExcavateButtonClicked(ExcavationType.Medium);
     }
 
     public void ExcavateHardButtonClicked()
     {
-        OnExcavateHardButtonClicked();
+        OnExcavateButtonClicked(ExcavationType.Hard);
     }
 }
