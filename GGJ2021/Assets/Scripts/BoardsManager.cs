@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum BoardType
 {
-    Main, UnexploredTerrain, HardUnexploredTerrain
+    Main, UnexploredTerrain, MediumUnexplored, HardUnexploredTerrain
 }
 
 public class BoardsManager : MonoBehaviour
@@ -77,6 +77,11 @@ public class BoardsManager : MonoBehaviour
     public void SwitchToUnexplore()
     {
         SwitchToBoard(BoardType.UnexploredTerrain);
+    }
+
+    public void SwitchToMediumUnexplore()
+    {
+        SwitchToBoard(BoardType.MediumUnexplored);
     }
 
     public void SwitchToHardUnexplore()
