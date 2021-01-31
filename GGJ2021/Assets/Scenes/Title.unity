@@ -743,6 +743,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3754195223328474684, guid: b0fefd64e3999dd4989a16c096f1c826,
         type: 3}
+      propertyPath: resources.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3754195223328474684, guid: b0fefd64e3999dd4989a16c096f1c826,
+        type: 3}
       propertyPath: MinimumMatchCount
       value: 3
       objectReference: {fileID: 0}
@@ -756,6 +761,38 @@ PrefabInstance:
       propertyPath: resources.Array.data[2].bar
       value: 
       objectReference: {fileID: 559133897293478991}
+    - target: {fileID: 3754195223328474684, guid: b0fefd64e3999dd4989a16c096f1c826,
+        type: 3}
+      propertyPath: resources.Array.data[3].piece
+      value: 
+      objectReference: {fileID: -7938313397786150799, guid: a524d65a7c2c8f84c8b989975b7813b3,
+        type: 3}
+    - target: {fileID: 3754195223328474684, guid: b0fefd64e3999dd4989a16c096f1c826,
+        type: 3}
+      propertyPath: resources.Array.data[3].bar
+      value: 
+      objectReference: {fileID: 559133897293478991}
+    - target: {fileID: 3754195223328474684, guid: b0fefd64e3999dd4989a16c096f1c826,
+        type: 3}
+      propertyPath: resources.Array.data[3].weight
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3754195223328474684, guid: b0fefd64e3999dd4989a16c096f1c826,
+        type: 3}
+      propertyPath: resources.Array.data[4].piece
+      value: 
+      objectReference: {fileID: -7938313397786150799, guid: a524d65a7c2c8f84c8b989975b7813b3,
+        type: 3}
+    - target: {fileID: 3754195223328474684, guid: b0fefd64e3999dd4989a16c096f1c826,
+        type: 3}
+      propertyPath: resources.Array.data[4].bar
+      value: 
+      objectReference: {fileID: 559133897293478991}
+    - target: {fileID: 3754195223328474684, guid: b0fefd64e3999dd4989a16c096f1c826,
+        type: 3}
+      propertyPath: resources.Array.data[4].weight
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3754195223328474685, guid: b0fefd64e3999dd4989a16c096f1c826,
         type: 3}
       propertyPath: m_Name
@@ -18551,7 +18588,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0.00012207031, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2125477375
