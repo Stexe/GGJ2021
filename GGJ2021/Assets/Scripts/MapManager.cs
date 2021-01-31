@@ -9,6 +9,7 @@ public class MapManager : MonoBehaviour
 {
     public GameObject buildingPanel;
     public GameObject excavationButtons;
+    public EnergyBar digTimerBar;
     public Color selectedColor = Color.red;
     public Color notSelectedColor = Color.clear;
 
@@ -28,6 +29,7 @@ public class MapManager : MonoBehaviour
     {
         Assert.IsNotNull(buildingPanel);
         Assert.IsNotNull(excavationButtons);
+        Assert.IsNotNull(digTimerBar);
 
         map = FindObjectOfType<Map>();
         map.InitializeMap();
@@ -105,10 +107,12 @@ public class MapManager : MonoBehaviour
             var oldTime = remainingExcavationTime;
             remainingExcavationTime -= Time.deltaTime;
 
-            if((int) oldTime != (int)remainingExcavationTime)
-            {
-                Debug.Log("Remaining: " + oldTime + " seconds");
-            }
+            //if((int) oldTime != (int)remainingExcavationTime)
+            //{
+            //    Debug.Log("Remaining: " + oldTime + " seconds");
+            //}
+            float max = digTimerBar.valueMax;
+            digTimerBar.valueCurrent = (int)(max * (remainingExcavationTime / normalExcavationTimeSec));
 
             yield return null;
         }
