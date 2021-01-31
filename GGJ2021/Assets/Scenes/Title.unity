@@ -1048,8 +1048,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 705164816}
   m_HandleRect: {fileID: 705164815}
   m_Direction: 0
-  m_Value: 0.5
-  m_Size: 0.44921878
+  m_Value: 0.50000006
+  m_Size: 0.44921884
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1295,7 +1295,7 @@ PrefabInstance:
     - target: {fileID: 3754195223328474685, guid: b0fefd64e3999dd4989a16c096f1c826,
         type: 3}
       propertyPath: m_Name
-      value: Board Terrain
+      value: Board Normal Terrain
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0fefd64e3999dd4989a16c096f1c826, type: 3}
@@ -1356,6 +1356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 6
+  amount: 0
 --- !u!114 &353176080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2687,6 +2688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8e44eae1a9df341b8b17bca5145a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  costToExcavate: []
 --- !u!114 &541216181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6846,6 +6848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 8
+  amount: 0
 --- !u!114 &811342280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7301,6 +7304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 10
+  amount: 0
 --- !u!1001 &871954236
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21309,6 +21313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 7
+  amount: 0
 --- !u!114 &1973016958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23510,6 +23515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 4
+  amount: 0
 --- !u!1 &634324212197311197
 GameObject:
   m_ObjectHideFlags: 0
@@ -23542,6 +23548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  amount: 0
 --- !u!1 &634324212529292547
 GameObject:
   m_ObjectHideFlags: 0
@@ -23574,6 +23581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  amount: 0
 --- !u!1 &634324212543358400
 GameObject:
   m_ObjectHideFlags: 0
@@ -23606,6 +23614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
+  amount: 0
 --- !u!1 &634324213173785511
 GameObject:
   m_ObjectHideFlags: 0
@@ -23638,6 +23647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 5
+  amount: 0
 --- !u!1 &1085336532850113552
 GameObject:
   m_ObjectHideFlags: 0
@@ -23670,6 +23680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  amount: 0
 --- !u!222 &1251310379289054717
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24158,6 +24169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 9
+  amount: 0
 --- !u!1001 &5681391844267251871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24193,7 +24205,7 @@ PrefabInstance:
     - target: {fileID: 5681391842546295274, guid: 63164c1d6c056c94bab3fd41f1e661e4,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5681391842546295274, guid: 63164c1d6c056c94bab3fd41f1e661e4,
         type: 3}
@@ -24204,6 +24216,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681391842546295274, guid: 63164c1d6c056c94bab3fd41f1e661e4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 541216182}
+    - target: {fileID: 5681391842546295274, guid: 63164c1d6c056c94bab3fd41f1e661e4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: FarmButtonClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681391842546295274, guid: 63164c1d6c056c94bab3fd41f1e661e4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5681391842546295275, guid: 63164c1d6c056c94bab3fd41f1e661e4,
         type: 3}
