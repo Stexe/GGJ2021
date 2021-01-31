@@ -15,7 +15,7 @@ public class Resources
 public class ResourceManagement : MonoBehaviour
 {
     public Dictionary<PieceType, Resource> typeToResource;
-    public Cost[] costToExcavate;
+    public Cost[] costToExcavateNormal, costToExcavateMedium, costToExcavateHard;
 
     void Start()
     {
@@ -45,9 +45,19 @@ public class ResourceManagement : MonoBehaviour
         return !building.costs.Any(cost => typeToResource[cost.type].bar.GetComponentInChildren<ResourceAmount>().amount < cost.amount);
     }
 
-    public bool HasResourcesToExcavate()
+    public bool HasResourcesToExcavateNormal()
     {
-        return !costToExcavate.Any(cost => typeToResource[cost.type].bar.valueCurrent < cost.amount);
+        return !costToExcavateNormal.Any(cost => typeToResource[cost.type].bar.valueCurrent < cost.amount);
+    }
+
+    public bool HasResourcesToExcavateMedium()
+    {
+        return !costToExcavateMedium.Any(cost => typeToResource[cost.type].bar.valueCurrent < cost.amount);
+    }
+
+    public bool HasResourcesToExcavateHard()
+    {
+        return !costToExcavateHard.Any(cost => typeToResource[cost.type].bar.valueCurrent < cost.amount);
     }
 
     private void IncreaseResourcesForMatchedPieces(HashSet<Piece> matched)

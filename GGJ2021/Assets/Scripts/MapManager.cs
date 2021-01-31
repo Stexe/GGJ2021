@@ -63,13 +63,39 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private void OnExcavateButtonClicked()
+    private void OnExcavateNormalButtonClicked()
     {
         if (inExcavateMode)
         {
             inExcavateMode = false;
         }
-        else if (resourceManagement.HasResourcesToExcavate())
+        else if (resourceManagement.HasResourcesToExcavateNormal())
+        {
+            inExcavateMode = true;
+            typeToBuild = null;
+        }
+    }
+
+    private void OnExcavateMediumButtonClicked()
+    {
+        if (inExcavateMode)
+        {
+            inExcavateMode = false;
+        }
+        else if (resourceManagement.HasResourcesToExcavateMedium())
+        {
+            inExcavateMode = true;
+            typeToBuild = null;
+        }
+    }
+
+    private void OnExcavateHardButtonClicked()
+    {
+        if (inExcavateMode)
+        {
+            inExcavateMode = false;
+        }
+        else if (resourceManagement.HasResourcesToExcavateHard())
         {
             inExcavateMode = true;
             typeToBuild = null;
@@ -88,12 +114,12 @@ public class MapManager : MonoBehaviour
 
     public void ConcreteFactoryButtonClicked()
     {
-        OnBuildButtonClicked(BuildingType.ConcreteFactory);
+        OnBuildButtonClicked(BuildingType.Quarry);
     }
 
     public void MetalworksButtonClicked()
     {
-        OnBuildButtonClicked(BuildingType.Metalworks);
+        OnBuildButtonClicked(BuildingType.Forge);
     }
 
     public void MiningFacilityButtonClicked()
@@ -103,26 +129,36 @@ public class MapManager : MonoBehaviour
 
     public void NuclearReactorButtonClicked()
     {
-        OnBuildButtonClicked(BuildingType.NuclearReactor);
+        OnBuildButtonClicked(BuildingType.Market);
     }
 
     public void DrugAndHugButtonClicked()
     {
-        OnBuildButtonClicked(BuildingType.DrugAndHug);
+        OnBuildButtonClicked(BuildingType.DrugHug);
     }
 
     public void MarketButtonClicked()
     {
-        OnBuildButtonClicked(BuildingType.Market);
+        OnBuildButtonClicked(BuildingType.Nuclear);
     }
 
     public void MonolithButtonClicked()
     {
-        OnBuildButtonClicked(BuildingType.Monolith);
+        OnBuildButtonClicked(BuildingType.Statue);
     }
 
-    public void ExcavateButtonClicked()
+    public void ExcavateNormalButtonClicked()
     {
-        OnExcavateButtonClicked();
+        OnExcavateNormalButtonClicked();
+    }
+
+    public void ExcavateMediumButtonClicked()
+    {
+        OnExcavateMediumButtonClicked();
+    }
+
+    public void ExcavateHardButtonClicked()
+    {
+        OnExcavateHardButtonClicked();
     }
 }

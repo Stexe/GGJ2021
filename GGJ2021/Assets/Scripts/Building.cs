@@ -11,7 +11,7 @@ public class Cost
 }
 public enum BuildingType
 {
-    HQ, Farm, Lumberyard, ConcreteFactory, Metalworks, MiningFacility, NuclearReactor, DrugAndHug, Market, Monolith
+    HQ, Farm, Lumberyard, Quarry, Forge, MiningFacility, Market, DrugHug, Nuclear, Statue
 }
 
 public class Building : MonoBehaviour
