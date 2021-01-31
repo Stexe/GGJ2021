@@ -56,7 +56,6 @@ public class MapManager : MonoBehaviour
 
     public void OnBuildButtonClicked(BuildingType type)
     {
-        Debug.Log("selected " + type);
         foreach (var button in buildingPanel.GetComponentsInChildren<BuildingButtonType>())
         {
             if (button.type != type)

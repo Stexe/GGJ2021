@@ -52,7 +52,7 @@ public class Board : MonoBehaviour
 
     public void ClearBoard()
     {
-        Debug.Log(type + ": " + GetComponentsInChildren<BoardSquare>().Length);
+        //Debug.Log(type + ": " + GetComponentsInChildren<BoardSquare>().Length);
         foreach (var s in GetComponentsInChildren<BoardSquare>())
         {
             Destroy(s.gameObject);
@@ -71,7 +71,7 @@ public class Board : MonoBehaviour
                 // instantiate board square
                 var square = Instantiate(squarePrefab, this.transform);
                 squares[x, y] = square;
-                square.name = "Square (" + x + ", " + y + ")";
+                square.name = "Square " + coordStr(x, y);
 
                 // randomize piece type without causing matches (brute force)
                 PieceType type;
@@ -171,7 +171,7 @@ public class Board : MonoBehaviour
     {
         List<BoardSquare> adjacent = new List<BoardSquare>();
 
-        Debug.Log(type + ", size: " + size);
+        //Debug.Log(type + ", size: " + size);
 
         int x = 0;
         int y = 0;
@@ -207,7 +207,6 @@ public class Board : MonoBehaviour
         }
         if (y < size - 1)
         {
-            Debug.Log(coordStr(x, y));
             adjacent.Add(squares[x, y + 1]);
         }
 
@@ -249,7 +248,7 @@ public class Board : MonoBehaviour
         //delete all of the matched pieces
         foreach (var square in matched)
         {
-            Debug.Log("Matched " + square.Piece.name + " on " + square.gameObject.name.Replace("Square", ""));
+            //Debug.Log("Matched " + square.Piece.name + " on " + square.gameObject.name.Replace("Square", ""));
             var piece = RemovePieceFromSquare(square);
             Destroy(piece.gameObject);
         }
@@ -265,10 +264,10 @@ public class Board : MonoBehaviour
                     // find a piece above to pull down
                     for (int j = y - 1; aboveSquareWithPiece == null && j >= 0; j--)
                     {
-                        Debug.Log("Looking at " + coordStr(x, j));
+                        //Debug.Log("Looking at " + coordStr(x, j));
                         if (squares[x, j].Piece != null)
                         {
-                            Debug.Log("Moving " + squares[x, j].Piece.name + coordStr(x, j) + " -> " + coordStr(x, y));
+                            //Debug.Log("Moving " + squares[x, j].Piece.name + coordStr(x, j) + " -> " + coordStr(x, y));
                             MovePieceBetweenSquares(squares[x, j], squares[x, y]);
                             break;
                         }
@@ -285,7 +284,7 @@ public class Board : MonoBehaviour
                 if (squares[x, y].Piece == null)
                 {
                     var piece = GenerateNewPiece(squares[x, y]);
-                    Debug.Log("Placed new piece " + piece.name + " on " + coordStr(x, y));
+                    //Debug.Log("Placed new piece " + piece.name + " on " + coordStr(x, y));
                 }
             }
         }
