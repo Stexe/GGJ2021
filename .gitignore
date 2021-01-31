@@ -9,10 +9,6 @@
 [Ll]ogs/
 [Mm]emoryCaptures/
 
-
-# Never ignore Asset meta data
-!/[Aa]ssets/**/*.meta
-
 # TextMesh Pro files
 [Aa]ssets/TextMesh*Pro/
 
