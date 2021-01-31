@@ -17,6 +17,7 @@ public enum BuildingType
 public class Building : MonoBehaviour
 {
     public BuildingType type;
+    public bool hasEfficiencyType;
     public PieceType efficiencyType;
     public Cost[] costs;
 }

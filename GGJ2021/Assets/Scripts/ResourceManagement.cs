@@ -38,7 +38,10 @@ public class ResourceManagement : MonoBehaviour
 
     public void DeductCostAndModifyEfficiency(Building building)
     {
-        typeToResource[building.efficiencyType].bar.GetComponentInChildren<ResourceEfficiency>().DecreaseAmount(1);
+        if (building.hasEfficiencyType)
+        {
+            typeToResource[building.efficiencyType].bar.GetComponentInChildren<ResourceEfficiency>().DecreaseAmount(1);
+        }
         foreach (var cost in building.costs)
         {
             typeToResource[cost.type].bar.GetComponentInChildren<ResourceAmount>().DecreaseAmount(cost.amount);
