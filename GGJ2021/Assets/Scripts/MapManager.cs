@@ -8,6 +8,7 @@ public class MapManager : MonoBehaviour
 {
     public GameObject buildingPanel;
     public Color selectedColor = Color.red;
+    public Color notSelectedColor = Color.clear;
 
     private ResourceManagement resourceManagement;
     private Map map;
@@ -56,22 +57,31 @@ public class MapManager : MonoBehaviour
     public void OnBuildButtonClicked(BuildingType type)
     {
         Debug.Log("selected " + type);
-        var button = buildingPanel.GetComponentsInChildren<BuildingButtonType>()
-                .Where(b => b.type == type)
-                .First();
-        if (typeToBuild.Value == type)
+        foreach (var button in buildingPanel.GetComponentsInChildren<BuildingButtonType>())
         {
-            Debug.Log("deselected " + type);
-            button.GetComponent<Image>().color = Color.white;
-            typeToBuild = null;
-        }
-        else if (CanAfford(type))
-        {
-            Debug.Log("Build Mode: " + type);
-            typeToBuild = type;
-            inExcavateMode = false;
+            if (button.type != type)
+            {
+                button.GetComponent<Image>().color = notSelectedColor;
+            }
+            else
+            {
+                // found clicked button
+                if (typeToBuild.HasValue && typeToBuild.Value == type)
+                {
+                    Debug.Log("deselected " + type);
+                    typeToBuild = null;
 
-            button.GetComponent<Image>().color = selectedColor;
+                    button.GetComponent<Image>().color = notSelectedColor;
+                }
+                else if (CanAfford(type))
+                {
+                    Debug.Log("Build Mode: " + type);
+                    typeToBuild = type;
+                    inExcavateMode = false;
+
+                    button.GetComponent<Image>().color = selectedColor;
+                }
+            }
         }
     }
 

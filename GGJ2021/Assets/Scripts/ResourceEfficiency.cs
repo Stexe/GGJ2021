@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class ResourceEfficiency : MonoBehaviour
 {
     public PieceType type;
+    public int minimumCost = 5;
     private EnergyBar energyBar;
     private int amount;
 
@@ -20,17 +19,11 @@ public class ResourceEfficiency : MonoBehaviour
         GetComponent<TextMeshProUGUI>().text = amount.ToString();
     }
 
-    public void IncreaseAmount(int byAmount)
-    {
-        amount += byAmount;
-        energyBar.valueMax += byAmount;
-        GetComponent<TextMeshProUGUI>().text = amount.ToString();
-    }
-
     public void DecreaseAmount(int byAmount)
     {
-        amount -= byAmount;
-        energyBar.valueMax -= byAmount;
+        int newValue = Mathf.Max(amount - byAmount, minimumCost);
+        amount = newValue;
+        energyBar.valueMax = newValue;
         GetComponent<TextMeshProUGUI>().text = amount.ToString();
     }
 }
