@@ -18,14 +18,16 @@ public class ResourceManagement : MonoBehaviour
 
     void Start()
     {
-        mainBoard = BoardsManager.FindMainBoard();
         typeToResource = new Dictionary<PieceType, Resource>();
-        foreach (var r in mainBoard.resources)
+        foreach (var r in BoardsManager.FindMainBoard().resources)
         {
             typeToResource.Add(r.piece.Type, r);
         }
 
-        mainBoard.OnPiecesMatched.AddListener(IncreaseResourcesForMatchedPieces);
+        foreach (var b in FindObjectsOfType<Board>())
+        {
+            b.OnPiecesMatched.AddListener(IncreaseResourcesForMatchedPieces);
+        }
     }
 
     private void IncreaseResourcesForMatchedPieces(HashSet<Piece> matched)
