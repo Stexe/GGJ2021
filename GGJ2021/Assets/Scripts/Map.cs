@@ -96,7 +96,10 @@ public class Map : MonoBehaviour
 
         // change graphics
         toConvert.GetComponent<Button>().targetGraphic = typeToTerrain[type].GetComponent<Image>();
-        Color newColor = typeToTerrain[type].transform.GetChild(0).GetComponent<Image>().color;
-        toConvert.transform.GetChild(0).GetComponent<Image>().color = newColor;
+
+        var sourceImage = typeToTerrain[type].transform.GetChild(0).GetComponent<Image>();
+        var destinationImage = toConvert.transform.GetChild(0).GetComponent<Image>();
+        destinationImage.overrideSprite = sourceImage.overrideSprite;
+        destinationImage.color = sourceImage.color;
     }
 }

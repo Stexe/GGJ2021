@@ -107,10 +107,6 @@ public class MapManager : MonoBehaviour
             var oldTime = remainingExcavationTime;
             remainingExcavationTime -= Time.deltaTime;
 
-            //if((int) oldTime != (int)remainingExcavationTime)
-            //{
-            //    Debug.Log("Remaining: " + oldTime + " seconds");
-            //}
             float max = digTimerBar.valueMax;
             digTimerBar.valueCurrent = (int)(max * (remainingExcavationTime / normalExcavationTimeSec));
 

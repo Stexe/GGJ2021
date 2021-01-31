@@ -66,7 +66,7 @@ public class BoardsManager : MonoBehaviour
                 {
                     b.ClearBoard();
                 }
-                Debug.Log("Setting Inactive " + b.type);
+                //Debug.Log("Setting Inactive " + b.type);
                 b.gameObject.SetActive(false);
             }
         }
