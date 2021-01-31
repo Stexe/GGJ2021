@@ -18,4 +18,10 @@ public class ResourceAmount : MonoBehaviour
         amount += byAmount;
         GetComponent<TextMeshProUGUI>().text = amount.ToString();
     }
+
+    public void DecreaseAmount(int byAmount)
+    {
+        amount -= byAmount;
+        GetComponent<TextMeshProUGUI>().text = amount.ToString();
+    }
 }
