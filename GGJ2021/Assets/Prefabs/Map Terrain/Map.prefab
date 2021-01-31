@@ -76,6 +76,7 @@ MonoBehaviour:
   buildingTypes:
   - {fileID: 812271462604120079, guid: 419998d30c969a6479e14e0b5de9e177, type: 3}
   - {fileID: 7492703816467449982, guid: 317628b97dedd4a44ba6823e79bd5f90, type: 3}
+  - {fileID: 7492703816467449982, guid: a52099512b598d24cba69b823fb7fc6b, type: 3}
   - {fileID: 7492703816467449982, guid: d4fa15cb5e4943640bcd99a496f4997c, type: 3}
   - {fileID: 7492703816467449982, guid: de6ec45709f9c2a4f853a1e3428170e8, type: 3}
   - {fileID: 7492703816467449982, guid: 80ebdd6a504f2b749aa5cc7c88bfa528, type: 3}
