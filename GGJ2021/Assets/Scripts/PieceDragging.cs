@@ -4,7 +4,20 @@ using UnityEngine;
 
 public class PieceDragging : MonoBehaviour
 {
-    private Board board;
+    private Board board
+    {
+        get
+        {
+            foreach (var b in FindObjectsOfType<Board>())
+            {
+                if (b.isActiveAndEnabled)
+                {
+                    return b;
+                }
+            }
+            return null;
+        }
+    }
 
     public Piece heldPiece;
     private BoardSquare currentHoldingSquare;
@@ -12,7 +25,6 @@ public class PieceDragging : MonoBehaviour
 
     void Start()
     {
-        board = FindObjectOfType<Board>();
         FindObjectOfType<ClickDetection>().onBoardSquareDown.AddListener(OnSquareClicked);
     }
 

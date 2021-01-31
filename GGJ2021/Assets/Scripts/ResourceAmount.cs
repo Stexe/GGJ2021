@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ResourceAmount : MonoBehaviour
 {
+    public PieceType type;
     private int amount;
 
     private void Start()

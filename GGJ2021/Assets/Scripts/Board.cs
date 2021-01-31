@@ -6,41 +6,67 @@ using UnityEngine.UI;
 
 public class PiecesEvent : UnityEvent<HashSet<Piece>> { }
 
+[System.Serializable]
+public class Resource
+{
+    public Piece piece;
+    public EnergyBar bar;
+    public float weight;
+}
+
 public class Board : MonoBehaviour
 {
     public int MinimumMatchCount;
-    public int Rows;
-    public int Columns;
-
     public BoardSquare squarePrefab;
     public Piece piecePrefab;
+    public Resource[] resources;
+    public BoardType type;
 
     public PiecesEvent OnPiecesMatched;
 
     public BoardSquare[,] squares;
 
     private GridLayoutGroup grid;
+    private Dictionary<PieceType, Resource> pieceTypeToResource = new Dictionary<PieceType, Resource>();
     private Dictionary<PieceType, int> pieceTypeCounter = new Dictionary<PieceType, int>();
-    private ResourceManagement resourceManagement;
+    private int size;
 
     private void Awake()
     {
         OnPiecesMatched = new PiecesEvent();
+        grid = GetComponent<GridLayoutGroup>();
+        EnergyBar[] bars = FindObjectsOfType<EnergyBar>();
+        foreach (var r in resources)
+        {
+            pieceTypeToResource.Add(r.piece.Type, r);
+            foreach (var b in bars)
+            {
+                var ra = b.GetComponentInChildren<ResourceAmount>();
+                if (ra != null && ra.type == r.piece.Type)
+                {
+                    r.bar = b;
+                }
+            }
+        }
     }
 
-    private void Start()
+    public void ClearBoard()
     {
-        resourceManagement = FindObjectOfType<ResourceManagement>();
-        grid = GetComponent<GridLayoutGroup>();
-        grid.constraintCount = Columns;
+        Debug.Log(type + ": " + GetComponentsInChildren<BoardSquare>().Length);
+        foreach (var s in GetComponentsInChildren<BoardSquare>())
+        {
+            Destroy(s.gameObject);
+        }
     }
 
     public void InitializeBoard()
     {
-        squares = new BoardSquare[Columns, Rows];
-        for (int x = 0; x < Columns; x++)
+        size = grid.constraintCount;
+
+        squares = new BoardSquare[size, size];
+        for (int x = 0; x < size; x++)
         {
-            for (int y = 0; y < Rows; y++)
+            for (int y = 0; y < size; y++)
             {
                 // instantiate board square
                 var square = Instantiate(squarePrefab, this.transform);
@@ -51,7 +77,7 @@ public class Board : MonoBehaviour
                 PieceType type;
                 do
                 {
-                    type = (PieceType)Random.Range(0, resourceManagement.resources.Length);
+                    type = rollRandomType();
                 } while (GetVerticallyConnectedOfType(type, x, y).Count + 1 >= MinimumMatchCount
                 || GetHorizontallyConnectedOfType(type, x, y).Count + 1 >= MinimumMatchCount);
 
@@ -59,6 +85,28 @@ public class Board : MonoBehaviour
                 GenerateNewPiece(square, type);
             }
         }
+    }
+
+    public PieceType rollRandomType()
+    {
+        float total = 0;
+        foreach (var r in resources)
+        {
+            total += r.weight;
+        }
+        float roll = Random.Range(0, total);
+        total = 0;
+        PieceType backupType = resources[0].piece.Type;
+        foreach (var r in resources)
+        {
+            total += r.weight;
+            if (roll <= total)
+            {
+                return r.piece.Type;
+            }
+        }
+
+        return backupType;
     }
 
     public List<BoardSquare> GetVerticallyConnectedOfType(PieceType type, int x, int y)
@@ -77,7 +125,7 @@ public class Board : MonoBehaviour
         }
 
         // check below
-        for (int i = y + 1; i < Rows; i++)
+        for (int i = y + 1; i < size; i++)
         {
             var square = squares[x, i];
             if (square == null || square.Piece == null || square.Piece.Type != type)
@@ -106,7 +154,7 @@ public class Board : MonoBehaviour
         }
 
         // check right
-        for (int i = x + 1; i < Columns; i++)
+        for (int i = x + 1; i < size; i++)
         {
             var square = squares[i, y];
             if (square == null || square.Piece == null || square.Piece.Type != type)
@@ -123,12 +171,14 @@ public class Board : MonoBehaviour
     {
         List<BoardSquare> adjacent = new List<BoardSquare>();
 
+        Debug.Log(type + ", size: " + size);
+
         int x = 0;
         int y = 0;
         bool go = true;
-        for (; x < Columns && go; x++)
+        for (; x < size && go; x++)
         {
-            for (; y < Rows && go; y++)
+            for (; y < size && go; y++)
             {
                 if (square == squares[x, y])
                 {
@@ -151,12 +201,13 @@ public class Board : MonoBehaviour
         {
             adjacent.Add(squares[x, y - 1]);
         }
-        if (x < Columns - 1)
+        if (x < size - 1)
         {
             adjacent.Add(squares[x + 1, y]);
         }
-        if (y < Rows - 1)
+        if (y < size - 1)
         {
+            Debug.Log(coordStr(x, y));
             adjacent.Add(squares[x, y + 1]);
         }
 
@@ -167,9 +218,9 @@ public class Board : MonoBehaviour
     {
         //find all of the matched pieces
         var matched = new HashSet<BoardSquare>();
-        for (int x = 0; x < Columns; x++)
+        for (int x = 0; x < size; x++)
         {
-            for (int y = 0; y < Rows; y++)
+            for (int y = 0; y < size; y++)
             {
                 var connected = GetHorizontallyConnectedOfType(squares[x, y].Piece.Type, x, y);
                 if (connected.Count + 1 >= MinimumMatchCount)
@@ -204,9 +255,9 @@ public class Board : MonoBehaviour
         }
 
         //pull down all non-pieces
-        for (int x = 0; x < Columns; x++)
+        for (int x = 0; x < size; x++)
         {
-            for (int y = Rows - 1; y >= 0; y--)
+            for (int y = size - 1; y >= 0; y--)
             {
                 if (squares[x, y].Piece == null)
                 {
@@ -227,9 +278,9 @@ public class Board : MonoBehaviour
         }
 
         //fill in empty spots
-        for (int x = 0; x < Columns; x++)
+        for (int x = 0; x < size; x++)
         {
-            for (int y = Rows - 1; y >= 0; y--)
+            for (int y = size - 1; y >= 0; y--)
             {
                 if (squares[x, y].Piece == null)
                 {
@@ -267,12 +318,13 @@ public class Board : MonoBehaviour
 
     private Piece GenerateNewPiece(BoardSquare onSquare)
     {
-        return GenerateNewPiece(onSquare, (PieceType)Random.Range(0, resourceManagement.resources.Length));
+        return GenerateNewPiece(onSquare, rollRandomType());
     }
 
     private Piece GenerateNewPiece(BoardSquare onSquare, PieceType type)
     {
-        var piece = Instantiate(resourceManagement.typeToResource[type].piece, onSquare.transform);
+
+        var piece = Instantiate(pieceTypeToResource[type].piece, onSquare.transform);
 
         // give piece a name
         if (!pieceTypeCounter.ContainsKey(type))

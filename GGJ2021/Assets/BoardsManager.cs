@@ -1,0 +1,81 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public enum BoardType
+{
+    Main, UnexploredTerrain, HardUnexploredTerrain
+}
+
+public class BoardsManager : MonoBehaviour
+{
+    private Board mainBoard;
+    private Board[] boards;
+
+    void Start()
+    {
+        boards = FindObjectsOfType<Board>();
+        foreach (var b in boards)
+        {
+            if (b.type != BoardType.Main)
+            {
+                b.gameObject.SetActive(false);
+            }
+        }
+
+        mainBoard = FindMainBoard();
+        if (mainBoard == null)
+        {
+            throw new System.Exception("Could not find Main Board");
+        }
+        mainBoard.InitializeBoard();
+    }
+
+    public static Board FindMainBoard()
+    {
+        foreach (var b in FindObjectsOfType<Board>())
+        {
+            if (b.type == BoardType.Main)
+            {
+                return b;
+            }
+        }
+
+        throw new System.Exception("Could not find Main Board");
+    }
+
+    public void SwitchToBoard(BoardType type)
+    {
+        foreach (var b in boards)
+        {
+            if (b.type == type)
+            {
+                Debug.Log("Setting Active " + b.type);
+                b.gameObject.SetActive(true);
+                if (type != BoardType.Main)
+                {
+                    b.InitializeBoard();
+                }
+            }
+            else
+            {
+                if (b.type != BoardType.Main)
+                {
+                    b.ClearBoard();
+                }
+                Debug.Log("Setting Inactive " + b.type);
+                b.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void SwitchToNotMain()
+    {
+        SwitchToBoard(BoardType.UnexploredTerrain);
+    }
+
+    public void SwitchToMain()
+    {
+        SwitchToBoard(BoardType.Main);
+    }
+}

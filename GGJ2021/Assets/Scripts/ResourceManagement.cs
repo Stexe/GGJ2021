@@ -3,34 +3,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [Serializable]
-public class Resource
+public class Resources
 {
-    public Piece piece;
-    public EnergyBar bar;
+    public PieceType type;
     public int count;
 }
 
 public class ResourceManagement : MonoBehaviour
 {
-    public Resource[] resources;
-
     public Dictionary<PieceType, Resource> typeToResource;
+    public Board mainBoard;
 
     void Start()
     {
+        mainBoard = BoardsManager.FindMainBoard();
         typeToResource = new Dictionary<PieceType, Resource>();
-        foreach (var r in resources)
+        foreach (var r in mainBoard.resources)
         {
             typeToResource.Add(r.piece.Type, r);
         }
 
-        Board board = FindObjectOfType<Board>();
-        board.OnPiecesMatched.AddListener(IncreaseResourcesForMatchedPieces);
-
-        board.InitializeBoard();
+        mainBoard.OnPiecesMatched.AddListener(IncreaseResourcesForMatchedPieces);
     }
 
     private void IncreaseResourcesForMatchedPieces(HashSet<Piece> matched)
