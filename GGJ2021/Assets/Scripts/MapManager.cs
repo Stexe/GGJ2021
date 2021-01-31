@@ -112,12 +112,12 @@ public class MapManager : MonoBehaviour
         OnBuildButtonClicked(BuildingType.Lumberyard);
     }
 
-    public void ConcreteFactoryButtonClicked()
+    public void QuarryButtonClicked()
     {
         OnBuildButtonClicked(BuildingType.Quarry);
     }
 
-    public void MetalworksButtonClicked()
+    public void ForgeButtonClicked()
     {
         OnBuildButtonClicked(BuildingType.Forge);
     }
@@ -127,22 +127,22 @@ public class MapManager : MonoBehaviour
         OnBuildButtonClicked(BuildingType.MiningFacility);
     }
 
-    public void NuclearReactorButtonClicked()
+    public void MarketButtonClicked()
     {
         OnBuildButtonClicked(BuildingType.Market);
     }
 
-    public void DrugAndHugButtonClicked()
+    public void DrugHugButtonClicked()
     {
         OnBuildButtonClicked(BuildingType.DrugHug);
     }
 
-    public void MarketButtonClicked()
+    public void NuclearButtonClicked()
     {
         OnBuildButtonClicked(BuildingType.Nuclear);
     }
 
-    public void MonolithButtonClicked()
+    public void StatueButtonClicked()
     {
         OnBuildButtonClicked(BuildingType.Statue);
     }
