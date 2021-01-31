@@ -52,8 +52,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   costs:
-  - type: 1
-    amount: 2
+  - type: 0
+    amount: 1
 --- !u!222 &-6566319090457321335
 CanvasRenderer:
   m_ObjectHideFlags: 0

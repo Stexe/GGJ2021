@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 968370218226932470}
   - component: {fileID: -3887054910240812888}
   m_Layer: 0
-  m_Name: Farm
+  m_Name: Statue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 134a76a3fec487944ac12de2219d7efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 9
   costs:
   - type: 0
     amount: 1
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bb414defe1640e341b1460458af64e48, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 72615135e568d3f4ba43b70ef8021784, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
