@@ -51,7 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
-  efficiencyType: 0
+  hasEfficiencyType: 1
+  efficiencyType: 2
   costs:
   - type: 0
     amount: 2
