@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,9 +12,10 @@ public class Map : MonoBehaviour
     private Dictionary<TerrainType, Terrain> typeToTerrain = new Dictionary<TerrainType, Terrain>();
     private Dictionary<BuildingType, Building> typeToBuilding = new Dictionary<BuildingType, Building>();
     private Dictionary<BuildingType, int> buildingCount = new Dictionary<BuildingType, int>();
-
-    private void Start()
+    
+    public void InitializeMap()
     {
+
         foreach (var terrain in terrainTypes)
         {
             typeToTerrain.Add(terrain.type, terrain);
@@ -27,6 +27,8 @@ public class Map : MonoBehaviour
         }
 
         var grid = GetComponent<GridLayoutGroup>();
+        tiles = new Terrain[grid.constraintCount, grid.constraintCount];
+
         for (int x = 0; x < grid.constraintCount; x++)
         {
             for (int y = 0; y < grid.constraintCount; y++)
@@ -55,10 +57,13 @@ public class Map : MonoBehaviour
     {
         var terrain = Instantiate(typeToTerrain[type], this.transform);
         terrain.gameObject.name = type + " " + Board.coordStr(x, y);
+
+        tiles[x, y] = terrain;
+
         return terrain;
     }
 
-    private Building GenerateBuildingOnTerrainTile(BuildingType type, Terrain tile)
+    public Building GenerateBuildingOnTerrainTile(BuildingType type, Terrain tile)
     {
         var building = Instantiate(typeToBuilding[type], tile.transform);
         if (!buildingCount.ContainsKey(type))
@@ -68,5 +73,22 @@ public class Map : MonoBehaviour
         building.gameObject.name = type + " " + buildingCount[type]++;
 
         return building;
+    }
+
+    public void BeginTileExcavation(Terrain tile)
+    {
+        Debug.Log("excavating " + tile.name);
+
+        ConvertToTerrainType(tile, TerrainType.Normal);
+    }
+
+    private void ConvertToTerrainType(Terrain toConvert, TerrainType type)
+    {
+        toConvert.type = type;
+
+        // change graphics
+        toConvert.GetComponent<Button>().targetGraphic = typeToTerrain[type].GetComponent<Image>();
+        Color newColor = typeToTerrain[type].transform.GetChild(0).GetComponent<Image>().color;
+        toConvert.transform.GetChild(0).GetComponent<Image>().color = newColor;
     }
 }

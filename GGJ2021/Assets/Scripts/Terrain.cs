@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum TerrainType
 {
@@ -11,5 +12,5 @@ public class Terrain : MonoBehaviour
 {
     public TerrainType type;
 
-    private Building building;
+    public Building building { get { return GetComponentInChildren<Building>(); } }
 }
