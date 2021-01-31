@@ -69,13 +69,18 @@ public class BoardsManager : MonoBehaviour
         }
     }
 
-    public void SwitchToNotMain()
+    public void SwitchToMain()
+    {
+        SwitchToBoard(BoardType.Main);
+    }
+
+    public void SwitchToUnexplore()
     {
         SwitchToBoard(BoardType.UnexploredTerrain);
     }
 
-    public void SwitchToMain()
+    public void SwitchToHardUnexplore()
     {
-        SwitchToBoard(BoardType.Main);
+        SwitchToBoard(BoardType.HardUnexploredTerrain);
     }
 }

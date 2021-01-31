@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum PieceType
 {
-    Food, Wood, Stone, Metal, Uranium, Gold
+    Food, Wood, Stone, Metal, Uranium, Gold, Water, Population
 }
