@@ -10,7 +10,8 @@ public class Map : MonoBehaviour
     public Terrain[,] tiles;
 
     private Dictionary<TerrainType, Terrain> typeToTerrain = new Dictionary<TerrainType, Terrain>();
-    private Dictionary<BuildingType, Building> typeToBuilding = new Dictionary<BuildingType, Building>();
+    [HideInInspector]
+    public Dictionary<BuildingType, Building> typeToBuilding = new Dictionary<BuildingType, Building>();
     private Dictionary<BuildingType, int> buildingCount = new Dictionary<BuildingType, int>();
     
     public void InitializeMap()

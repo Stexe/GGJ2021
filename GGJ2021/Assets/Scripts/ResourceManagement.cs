@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -14,6 +15,7 @@ public class Resources
 public class ResourceManagement : MonoBehaviour
 {
     public Dictionary<PieceType, Resource> typeToResource;
+    public Cost[] costToExcavate;
 
     void Start()
     {
@@ -27,6 +29,25 @@ public class ResourceManagement : MonoBehaviour
         {
             b.OnPiecesMatched.AddListener(IncreaseResourcesForMatchedPieces);
         }
+    }
+
+    public void DeductCostAndModifyEfficiency(Building building)
+    {
+        foreach (var cost in building.costs)
+        {
+            typeToResource[cost.type].bar.GetComponentInChildren<ResourceEfficiency>().DecreaseAmount(1);
+            typeToResource[cost.type].bar.GetComponentInChildren<ResourceAmount>().DecreaseAmount(cost.amount);
+        }
+    }
+
+    public bool HasResourcesToBuild(Building building)
+    {
+        return !building.costs.Any(cost => typeToResource[cost.type].bar.GetComponentInChildren<ResourceAmount>().amount < cost.amount);
+    }
+
+    public bool HasResourcesToExcavate()
+    {
+        return !costToExcavate.Any(cost => typeToResource[cost.type].bar.valueCurrent < cost.amount);
     }
 
     private void IncreaseResourcesForMatchedPieces(HashSet<Piece> matched)

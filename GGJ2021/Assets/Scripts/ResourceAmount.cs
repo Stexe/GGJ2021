@@ -6,7 +6,8 @@ using UnityEngine;
 public class ResourceAmount : MonoBehaviour
 {
     public PieceType type;
-    private int amount;
+    [HideInInspector]
+    public int amount;
 
     private void Start()
     {
