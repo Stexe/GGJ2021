@@ -53,8 +53,10 @@ MonoBehaviour:
   type: 2
   efficiencyType: 0
   costs:
-  - type: 0
-    amount: 0
+  - type: 1
+    amount: 2
+  - type: 6
+    amount: 2
 --- !u!222 &968370218226932470
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ResourceSpriteSheet
   m_EditorClassIdentifier: 
   hashCode: -835966772
-  material: {fileID: 2235621153150268194}
+  material: {fileID: 7170824503102241947}
   materialHashCode: 0
   m_Version: 1.1.0
   spriteSheet: {fileID: 2800000, guid: 0ecc80e7548b5744cad549fe04cab8c4, type: 3}
@@ -87,15 +87,15 @@ MonoBehaviour:
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
-      m_Width: 165
+      m_Width: 164
       m_Height: 95
-      m_HorizontalBearingX: -82.5
-      m_HorizontalBearingY: 47.5
-      m_HorizontalAdvance: 165
+      m_HorizontalBearingX: -82
+      m_HorizontalBearingY: 80
+      m_HorizontalAdvance: 164
     m_GlyphRect:
       m_X: 0
       m_Y: 929
-      m_Width: 165
+      m_Width: 164
       m_Height: 95
     m_Scale: 1
     m_AtlasIndex: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
       m_Width: 141
       m_Height: 132
       m_HorizontalBearingX: -70.5
-      m_HorizontalBearingY: 66
+      m_HorizontalBearingY: 120
       m_HorizontalAdvance: 141
     m_GlyphRect:
       m_X: 295
@@ -122,7 +122,7 @@ MonoBehaviour:
       m_Width: 130
       m_Height: 143
       m_HorizontalBearingX: -65
-      m_HorizontalBearingY: 71.5
+      m_HorizontalBearingY: 120
       m_HorizontalAdvance: 130
     m_GlyphRect:
       m_X: 165
@@ -138,7 +138,7 @@ MonoBehaviour:
       m_Width: 165
       m_Height: 115
       m_HorizontalBearingX: -82.5
-      m_HorizontalBearingY: 57.5
+      m_HorizontalBearingY: 120
       m_HorizontalAdvance: 165
     m_GlyphRect:
       m_X: 0
@@ -154,7 +154,7 @@ MonoBehaviour:
       m_Width: 141
       m_Height: 143
       m_HorizontalBearingX: -70.5
-      m_HorizontalBearingY: 71.5
+      m_HorizontalBearingY: 120
       m_HorizontalAdvance: 141
     m_GlyphRect:
       m_X: 302
@@ -170,7 +170,7 @@ MonoBehaviour:
       m_Width: 137
       m_Height: 145
       m_HorizontalBearingX: -68.5
-      m_HorizontalBearingY: 72.5
+      m_HorizontalBearingY: 120
       m_HorizontalAdvance: 137
     m_GlyphRect:
       m_X: 165
@@ -186,7 +186,7 @@ MonoBehaviour:
       m_Width: 158
       m_Height: 136
       m_HorizontalBearingX: -79
-      m_HorizontalBearingY: 68
+      m_HorizontalBearingY: 120
       m_HorizontalAdvance: 158
     m_GlyphRect:
       m_X: 121
@@ -202,7 +202,7 @@ MonoBehaviour:
       m_Width: 151
       m_Height: 144
       m_HorizontalBearingX: -75.5
-      m_HorizontalBearingY: 72
+      m_HorizontalBearingY: 120
       m_HorizontalAdvance: 151
     m_GlyphRect:
       m_X: 279
@@ -217,7 +217,7 @@ MonoBehaviour:
       m_Width: 107
       m_Height: 166
       m_HorizontalBearingX: -53.5
-      m_HorizontalBearingY: 83
+      m_HorizontalBearingY: 150
       m_HorizontalAdvance: 107
     m_GlyphRect:
       m_X: 12
@@ -233,7 +233,7 @@ MonoBehaviour:
       m_Width: 159
       m_Height: 139
       m_HorizontalBearingX: -79.5
-      m_HorizontalBearingY: 69.5
+      m_HorizontalBearingY: 120
       m_HorizontalAdvance: 159
     m_GlyphRect:
       m_X: 148
@@ -249,7 +249,7 @@ MonoBehaviour:
       m_Width: 146
       m_Height: 146
       m_HorizontalBearingX: -73
-      m_HorizontalBearingY: 73
+      m_HorizontalBearingY: 120
       m_HorizontalAdvance: 146
     m_GlyphRect:
       m_X: 1
@@ -262,7 +262,7 @@ MonoBehaviour:
       type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
---- !u!21 &2235621153150268194
+--- !u!21 &7170824503102241947
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 1
