@@ -86,4 +86,7 @@ MonoBehaviour:
   - {fileID: 7492703816467449982, guid: a4f8dca660c1d8645a49719301f69045, type: 3}
   terrainTypes:
   - {fileID: 8028262033731772975, guid: 49fc499f7917ea848898bb981825a109, type: 3}
+  - {fileID: 1542809031225987088, guid: aefc302d2b3f7964cb41de7badc15245, type: 3}
+  - {fileID: 7349713671135893742, guid: f6cf7f4d478324f48aa96e7ceb8221e9, type: 3}
+  - {fileID: 7349713671135893742, guid: f6cf7f4d478324f48aa96e7ceb8221e9, type: 3}
   - {fileID: 7349713671135893742, guid: f6cf7f4d478324f48aa96e7ceb8221e9, type: 3}
