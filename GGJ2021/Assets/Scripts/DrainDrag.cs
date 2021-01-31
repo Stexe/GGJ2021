@@ -31,7 +31,7 @@ public class DrainDrag : MonoBehaviour
             bar.valueCurrent = elapsedTime;
             if (bar.valueCurrent <= 0)
             {
-                pieceDragging.DropPiece();
+                pieceDragging.DropPiece(true);
             }
         }
 

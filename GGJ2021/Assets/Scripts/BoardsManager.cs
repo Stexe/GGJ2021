@@ -11,9 +11,11 @@ public class BoardsManager : MonoBehaviour
 {
     private Board mainBoard;
     private Board[] boards;
+    private PieceDragging pieceDragging;
 
     void Start()
     {
+        pieceDragging = FindObjectOfType<PieceDragging>();
         boards = FindObjectsOfType<Board>();
         foreach (var b in boards)
         {
@@ -46,6 +48,7 @@ public class BoardsManager : MonoBehaviour
 
     public void SwitchToBoard(BoardType type)
     {
+        pieceDragging.DropPiece(false);
         foreach (var b in boards)
         {
             if (b.type == type)

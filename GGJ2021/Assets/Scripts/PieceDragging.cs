@@ -41,7 +41,7 @@ public class PieceDragging : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.Mouse0) && heldPiece != null)
         {
-            DropPiece();
+            DropPiece(true);
         }
         previousMousePosition = currentMousePosition;
 
@@ -63,14 +63,22 @@ public class PieceDragging : MonoBehaviour
         heldPiece = square.Piece;
     }
 
-    public void DropPiece()
+    public void DropPiece(bool doMatching)
     {
+        if (heldPiece == null)
+        {
+            return;
+        }
+
         //stop floating above other pieces
         heldPiece.transform.position = new Vector3(currentHoldingSquare.transform.position.x, currentHoldingSquare.transform.position.y, 0);
 
         heldPiece = null;
 
-        while (board.FindAndNotifyMatches()) { }
+        if (doMatching)
+        {
+            while (board.FindAndNotifyMatches()) { }
+        }
     }
 
     private BoardSquare GetHoveredSquare()

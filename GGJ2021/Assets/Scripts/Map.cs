@@ -13,7 +13,7 @@ public class Map : MonoBehaviour
     [HideInInspector]
     public Dictionary<BuildingType, Building> typeToBuilding = new Dictionary<BuildingType, Building>();
     private Dictionary<BuildingType, int> buildingCount = new Dictionary<BuildingType, int>();
-    
+
     public void InitializeMap()
     {
 
@@ -48,7 +48,7 @@ public class Map : MonoBehaviour
                 }
                 else
                 {
-                    GenerateTerrainTile(TerrainType.UnexploredBasic, x, y);
+                    GenerateTerrainTile(TerrainType.UnexcavatedNormal, x, y);
                 }
             }
         }
@@ -79,6 +79,13 @@ public class Map : MonoBehaviour
     public void BeginTileExcavation(Terrain tile)
     {
         Debug.Log("excavating " + tile.name);
+
+        ConvertToTerrainType(tile, TerrainType.Excavating);
+    }
+
+    public void FinishTileExcavation(Terrain tile)
+    {
+        Debug.Log("excavated " + tile.name);
 
         ConvertToTerrainType(tile, TerrainType.Normal);
     }

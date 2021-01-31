@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public enum TerrainType
 {
-    Normal, UnexploredBasic, UnexploredAdvanced, Excavating
+    Normal, UnexcavatedNormal, UnexcavatedMedium, UnexcavatedHard, Excavating
 }
 
 public class Terrain : MonoBehaviour
