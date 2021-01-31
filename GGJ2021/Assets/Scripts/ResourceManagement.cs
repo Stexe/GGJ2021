@@ -14,7 +14,6 @@ public class Resources
 public class ResourceManagement : MonoBehaviour
 {
     public Dictionary<PieceType, Resource> typeToResource;
-    public Board mainBoard;
 
     void Start()
     {
