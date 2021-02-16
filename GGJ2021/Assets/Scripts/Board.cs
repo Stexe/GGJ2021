@@ -216,7 +216,9 @@ public class Board : MonoBehaviour
     public bool FindAndNotifyMatches()
     {
         //find all of the matched pieces
-        var matched = new HashSet<BoardSquare>();
+        var horizontalMatched = new List<List<BoardSquare>>();
+        var verticalMatched = new List<List<BoardSquare>>();
+
         for (int x = 0; x < size; x++)
         {
             for (int y = 0; y < size; y++)
@@ -224,33 +226,57 @@ public class Board : MonoBehaviour
                 var connected = GetHorizontallyConnectedOfType(squares[x, y].Piece.Type, x, y);
                 if (connected.Count + 1 >= MinimumMatchCount)
                 {
-                    matched.Add(squares[x, y]);
-                    foreach (var c in connected)
+                    if (!horizontalMatched.Any(matchSet => matchSet.Contains(connected[0])))
                     {
-                        matched.Add(c);
-                    }
+                        var matchSet = new List<BoardSquare>();
+                        horizontalMatched.Add(matchSet);
 
+                        matchSet.Add(squares[x, y]);
+                        foreach (var c in connected)
+                        {
+                            matchSet.Add(c);
+                        }
+                    }
                 }
                 connected = GetVerticallyConnectedOfType(squares[x, y].Piece.Type, x, y);
                 if (connected.Count + 1 >= MinimumMatchCount)
                 {
-                    matched.Add(squares[x, y]);
-                    foreach (var c in connected)
+                    if (!verticalMatched.Any(matchSet => matchSet.Contains(connected[0])))
                     {
-                        matched.Add(c);
+                        var matchSet = new List<BoardSquare>();
+                        verticalMatched.Add(matchSet);
+
+                        matchSet.Add(squares[x, y]);
+                        foreach (var c in connected)
+                        {
+                            matchSet.Add(c);
+                        }
                     }
                 }
             }
         }
 
-        OnPiecesMatched.Invoke(new HashSet<Piece>(matched.Select(m => m.Piece)));
+        var matched = new List<List<BoardSquare>>();
+        matched.AddRange(horizontalMatched);
+        matched.AddRange(verticalMatched);
+
+        foreach (var matchSet in matched)
+        {
+            OnPiecesMatched.Invoke(new HashSet<Piece>(matchSet.Select(m => m.Piece)));
+        }
 
         //delete all of the matched pieces
-        foreach (var square in matched)
+        foreach (var matchSet in matched)
         {
             //Debug.Log("Matched " + square.Piece.name + " on " + square.gameObject.name.Replace("Square", ""));
-            var piece = RemovePieceFromSquare(square);
-            Destroy(piece.gameObject);
+            foreach (var square in matchSet)
+            {
+                var piece = RemovePieceFromSquare(square);
+                if (piece != null)
+                {
+                    Destroy(piece.gameObject);
+                }
+            }
         }
 
         //pull down all non-pieces
@@ -295,7 +321,10 @@ public class Board : MonoBehaviour
     public Piece RemovePieceFromSquare(BoardSquare square)
     {
         var piece = square.GetComponentInChildren<Piece>();
-        piece.transform.SetParent(null);
+        if (piece != null)
+        {
+            piece.transform.SetParent(null);
+        }
         return piece;
     }
 

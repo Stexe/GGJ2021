@@ -21,6 +21,13 @@ public class ResourceManagement : MonoBehaviour
 {
     public Dictionary<PieceType, Resource> typeToResource;
     public Cost[] costToExcavateNormal, costToExcavateMedium, costToExcavateHard;
+    public int match3 = 3;
+    public int match4 = 4;
+    public int match5 = 5;
+    public int match6 = 6;
+    public int match7 = 7;
+    public int match8 = 8;
+    public int match9 = 9;
 
     void Start()
     {
@@ -70,15 +77,42 @@ public class ResourceManagement : MonoBehaviour
 
     private void IncreaseResourcesForMatchedPieces(HashSet<Piece> matched)
     {
-        foreach (Piece p in matched)
+        int toIncrement;
+        switch (matched.Count())
         {
-            Resource resource = typeToResource[p.Type];
-            resource.bar.valueCurrent++;
-            while (resource.bar.valueMax <= resource.bar.valueCurrent)
-            {
-                resource.bar.valueCurrent -= resource.bar.valueMax;
-                resource.bar.GetComponentInChildren<ResourceAmount>().IncreaseAmount(1);
-            }
+            case 3:
+                toIncrement = match3;
+                break;
+            case 4:
+                toIncrement = match4;
+                break;
+            case 5:
+                toIncrement = match5;
+                break;
+            case 6:
+                toIncrement = match6;
+                break;
+            case 7:
+                toIncrement = match7;
+                break;
+            case 8:
+                toIncrement = match8;
+                break;
+            case 9:
+                toIncrement = match9;
+                break;
+            default:
+                throw new System.Exception("unexpected match count: " + matched.Count());
         }
+
+        Resource resource = typeToResource[matched.First().Type];
+        int total = resource.bar.valueCurrent;
+        total += toIncrement;
+        while (resource.bar.valueMax <= total)
+        {
+            total -= resource.bar.valueMax;
+            resource.bar.GetComponentInChildren<ResourceAmount>().IncreaseAmount(1);
+        }
+        resource.bar.valueCurrent = total;
     }
 }
