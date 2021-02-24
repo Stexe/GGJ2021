@@ -34,10 +34,7 @@ public class Map : MonoBehaviour
         {
             for (int y = 0; y < grid.constraintCount; y++)
             {
-                if ((x == 3 && y == 4)
-                    || (x == 4 && y == 5)
-                    || (x == 4 && y == 3)
-                    || (x == 5 && y == 4))
+                if ((x == 5 && y == 4))
                 {
                     GenerateTerrainTile(TerrainType.Normal, x, y);
                 }
